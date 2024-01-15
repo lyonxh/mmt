@@ -1,0 +1,52 @@
+syntax = "v1"
+
+import "tys.api"
+
+@server(
+	group: base
+)
+service mmt {
+	@doc "health check"
+	@handler health
+	get /health(HealthReq) returns (HealthRes)
+}
+
+// ----------------  ----------------  ----------------
+@server(
+	prefix: /user
+	group: user
+)
+service mmt {
+	@doc "user login"
+	@handler login
+	post /login(LoginReq) returns (LoginRes)
+
+	@doc "user register"
+	@handler register
+	post /register(RegisterReq) returns(RegisterRes)
+
+	@doc "user list"
+	@handler List
+	get /list() returns()
+
+	@doc(
+		summary: user update
+	)
+	@handler update
+	put /update() returns()
+
+}
+
+// ----------------  ----------------  ----------------
+
+@server(
+	prefix: /application
+	group: application
+)
+service mmt {
+	@doc(
+		summary: application list
+	)
+	@handler List
+	get /list() returns()
+}
