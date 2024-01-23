@@ -2,11 +2,15 @@ package user
 
 import (
 	"context"
+	"errors"
 
 	"mmt/mmt/internal/svc"
 	"mmt/mmt/internal/types"
+	"mmt/mmt/model"
 
+	"github.com/jinzhu/copier"
 	"github.com/zeromicro/go-zero/core/logx"
+	"gorm.io/gorm"
 )
 
 type RegisterLogic struct {
@@ -23,8 +27,14 @@ func NewRegisterLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Register
 	}
 }
 
-func (l *RegisterLogic) Register(req *types.RegisterReq) (resp *types.RegisterRes, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *RegisterLogic) Register(req *types.RegisterReq) (*types.RegisterRes, error) {
+	u := &model.MmtUsers{}
+	_ = copier.Copy(u, req)
+	if !errors.Is(l.svcCtx.Mysql.Where("user_name = ?", req.UserName).First(&model.MmtUsers{}).Error, gorm.ErrRecordNotFound) {
+		return nil, errors.New("user has exist")
+	}
+	if err := l.svcCtx.Mysql.Table(model.MmtUsers{}.TableName()).Create(u).Error; err != nil {
+		return nil, err
+	}
+	return &types.RegisterRes{RegisterReq: *req}, nil
 }

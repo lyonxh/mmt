@@ -2,51 +2,69 @@ syntax = "v1"
 
 import "tys.api"
 
+// ----------------  user ----------------
 @server(
-	group: base
-)
-service mmt {
-	@doc "health check"
-	@handler health
-	get /health(HealthReq) returns (HealthRes)
-}
-
-// ----------------  ----------------  ----------------
-@server(
-	prefix: /user
+	prefix: /v1
 	group: user
 )
 service mmt {
-	@doc "user login"
+	@doc(
+		summary: user login
+	)
 	@handler login
-	post /login(LoginReq) returns (LoginRes)
-
-	@doc "user register"
-	@handler register
-	post /register(RegisterReq) returns(RegisterRes)
-
-	@doc "user list"
-	@handler List
-	get /list() returns()
+	post /user/login(LoginReq) returns (LoginRes)
 
 	@doc(
-		summary: user update
+		summary: user register
 	)
-	@handler update
-	put /update() returns()
-
+	@handler register
+	post /user/register(RegisterReq) returns(RegisterRes)
 }
 
-// ----------------  ----------------  ----------------
-
 @server(
-	prefix: /application
-	group: application
+	prefix: /v1
+	group: user
+	middleware: JwtAuth
 )
 service mmt {
 	@doc(
-		summary: application list
+		summary: get user list
 	)
-	@handler List
-	get /list() returns()
+	@handler getUserList
+	post /user/list(GetUserListReq) returns(GetUserListRes)
+
+	@doc(
+		summary: delete user
+	)
+	@handler deleteUser
+	delete /user/:id(DeleteUserReq) returns(NoneRes)
+
+	@doc(
+		summary: update user
+	)
+	@handler updateUser
+	put /user(UpdateReq) returns(NoneRes)
+
+	@doc(
+		summary: get user by id
+	)
+	@handler getUserById
+	get /user/:id(GetUserByIdReq) returns(GetUserByIdRes)
+
+}
+
+// ----------------  application  ----------------
+@server(
+	prefix: /v1
+	group: application
+	middleware: JwtAuth
+)
+service mmt {
+	@doc(
+		summary: create app
+	)
+	@handler createApplication
+	post /app(RequestBoday) returns(ResponseBoday)
+	
+	
 }

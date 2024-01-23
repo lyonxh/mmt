@@ -1,12 +1,12 @@
 package user
 
 import (
-	"net/http"
-
 	"github.com/zeromicro/go-zero/rest/httpx"
+	"mmt/common"
 	"mmt/mmt/internal/logic/user"
 	"mmt/mmt/internal/svc"
 	"mmt/mmt/internal/types"
+	"net/http"
 )
 
 func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
@@ -19,10 +19,6 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 
 		l := user.NewRegisterLogic(r.Context(), svcCtx)
 		resp, err := l.Register(&req)
-		if err != nil {
-			httpx.ErrorCtx(r.Context(), w, err)
-		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
-		}
+		common.ResResult(w, resp, err)
 	}
 }

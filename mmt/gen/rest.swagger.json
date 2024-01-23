@@ -1,0 +1,391 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "",
+    "version": ""
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/application": {
+      "get": {
+        "summary": "application list",
+        "operationId": "list",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "application"
+        ]
+      },
+      "post": {
+        "summary": "application create",
+        "operationId": "create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "application"
+        ]
+      }
+    },
+    "/v1/application/{id}": {
+      "get": {
+        "summary": "application get",
+        "operationId": "get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "application"
+        ]
+      },
+      "delete": {
+        "summary": "application delete",
+        "operationId": "delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "application"
+        ]
+      },
+      "put": {
+        "summary": "application update",
+        "operationId": "update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "application"
+        ]
+      }
+    },
+    "/v1/user": {
+      "get": {
+        "summary": "user list",
+        "operationId": "list",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/login": {
+      "post": {
+        "summary": "user login",
+        "operationId": "login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginRes"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/register": {
+      "post": {
+        "summary": "user register",
+        "operationId": "register",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RegisterRes"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    },
+    "/v1/user/{id}": {
+      "get": {
+        "summary": "get user by id",
+        "operationId": "get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginRes"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      },
+      "delete": {
+        "summary": "user delete",
+        "operationId": "delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      },
+      "put": {
+        "summary": "user update",
+        "operationId": "update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {}
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "username",
+        "password"
+      ]
+    },
+    "LoginRes": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "accessExpire": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "refreshAfter": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "title": "LoginRes",
+      "required": [
+        "accessToken",
+        "accessExpire",
+        "refreshAfter"
+      ]
+    },
+    "RegisterReq": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "string"
+        },
+        "idcard": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterReq",
+      "required": [
+        "username",
+        "nickname",
+        "password",
+        "mobile"
+      ]
+    },
+    "RegisterRes": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/uint"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "title": "RegisterRes",
+      "required": [
+        "id",
+        "username"
+      ]
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "date": {
+          "type": "object"
+        }
+      },
+      "title": "Response",
+      "required": [
+        "code",
+        "message",
+        "date"
+      ]
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

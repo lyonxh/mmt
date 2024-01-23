@@ -1,34 +1,84 @@
 syntax = "v1"
 
+type Pagination {
+	Page     int   `json:"page"`
+	PageSize int   `json:"pageSize"`
+	Total    int64 `json:"total"`
+}
+
+type NoneRes struct {}
+
 type (
-    HealthReq {
-        Ping string `json:"ping,optional"`
-    }
-    HealthRes {
-        Pong string `json:"pong"`
-    }
+	LoginReq {
+		UserName string `json:"username"`
+		PassWord string `json:"password"`
+	}
+	LoginRes {
+		Info         interface{} `json:"info"`
+		AccessToken  string      `json:"accessToken"`
+		AccessExpire int64       `json:"accessExpire"`
+		RefreshAfter int64       `json:"refreshAfter"`
+	}
 )
 type (
-    
+	RegisterReq {
+		UserName string `json:"username"`
+		NickName string `json:"nickname"`
+		PassWord string `json:"password"`
+		Mobile   string `json:"mobile"`
+		IdCard   string `json:"idcard,optional"`
+		Email    string `json:"email,optional"`
+	}
+	RegisterRes {
+		RegisterReq RegisterReq `json:"info"`
+	}
+)
+
+type (
+	GetUserListReq {
+		Page     int    `json:"page"`
+		PageSize int    `json:"pageSize"`
+		UserName string `json:"username,optional"`
+		NickName string `json:"nickname,optional"`
+		PassWord string `json:"password,optional"`
+		Mobile   string `json:"mobile,optional"`
+		IdCard   string `json:"idcard,optional"`
+		Email    string `json:"email,optional"`
+	}
+
+	GetUserListRes {
+		Info interface{} `json:"info"`
+		Pagination
+	}
+)
+
+type (
+	DeleteUserReq {
+		Id uint `path:"id"`
+	}
 )
 type (
-    LoginReq {
-        UserName string `json:"username"`
-        PassWord string `json:"password"`
-    }
-    LoginRes {
-        AccessToken  string `json:"accessToken"`
-		AccessExpire int64  `json:"accessExpire"`
-		RefreshAfter int64  `json:"refreshAfter"`
-    }
+	UpdateReq {
+		Id       uint   `json:"id"`
+		UserName string `json:"username,optional"`
+		NickName string `json:"nickname,optional"`
+		PassWord string `json:"password,optional"`
+		Mobile   string `json:"mobile,optional"`
+		IdCard   string `json:"idcard,optional"`
+		Email    string `json:"email,optional"`
+	}
 )
 type (
-    RegisterReq {
-        UserName string `json:"username"`
-        PassWord string `json:"password"`
-    }
-    RegisterRes {
-        Id int64 `json:"id"`
-        RegisterReq
-    }
+	GetUserByIdReq {
+		Id uint `path:"id"`
+	}
+	GetUserByIdRes {
+		Data interface{} `json:"info"`
+	}
+)
+// ----------------  application  ----------------
+type (
+	CreateApplication {
+		Name string
+	}
 )

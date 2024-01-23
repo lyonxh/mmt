@@ -1,3 +1,22 @@
 Name: mmt
 Host: 0.0.0.0
 Port: 8888
+Log:
+  ServiceName: "mmt"
+  Level: info
+  Compress: true
+  Stat: false
+DevServer:
+    Enabled: true
+Auth:
+  AccessSecret: 460fj6f1-6o10-90qm-54t1-5a1oed505da0
+  AccessExpire: 86400
+
+Mysql:
+  DataSource: "root:123456@tcp(127.0.0.1:3306)/mmt?charset=utf8mb4&parseTime=True&loc=Local"
+
+Redis:
+  Host: "127.0.0.1:6379"
+  Type: "node"
+  Pass: ""
+  Tls: false

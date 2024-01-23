@@ -9,16 +9,16 @@ import (
 	"net/http"
 )
 
-func LoginHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func GetUserListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.LoginReq
+		var req types.GetUserListReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := user.NewLoginLogic(r.Context(), svcCtx)
-		resp, err := l.Login(&req)
+		l := user.NewGetUserListLogic(r.Context(), svcCtx)
+		resp, err := l.GetUserList(&req)
 		common.ResResult(w, resp, err)
 	}
 }

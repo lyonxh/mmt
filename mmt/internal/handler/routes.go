@@ -4,8 +4,6 @@ package handler
 import (
 	"net/http"
 
-	application "mmt/mmt/internal/handler/application"
-	base "mmt/mmt/internal/handler/base"
 	user "mmt/mmt/internal/handler/user"
 	"mmt/mmt/internal/svc"
 
@@ -16,47 +14,45 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodGet,
-				Path:    "/health",
-				Handler: base.HealthHandler(serverCtx),
-			},
-		},
-	)
-
-	server.AddRoutes(
-		[]rest.Route{
-			{
 				Method:  http.MethodPost,
-				Path:    "/login",
+				Path:    "/user/login",
 				Handler: user.LoginHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/register",
+				Path:    "/user/register",
 				Handler: user.RegisterHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: user.ListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPut,
-				Path:    "/update",
-				Handler: user.UpdateHandler(serverCtx),
-			},
 		},
-		rest.WithPrefix("/user"),
+		rest.WithPrefix("/v1"),
 	)
 
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: application.ListHandler(serverCtx),
-			},
-		},
-		rest.WithPrefix("/application"),
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.JwtAuth},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/list",
+					Handler: user.GetUserListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodDelete,
+					Path:    "/user/:id",
+					Handler: user.DeleteUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPut,
+					Path:    "/user",
+					Handler: user.UpdateUserHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user/:id",
+					Handler: user.GetUserByIdHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithPrefix("/v1"),
 	)
 }
