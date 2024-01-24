@@ -8,6 +8,7 @@ type MmtWebHook struct {
 	Url      string `json:"url" gorm:"comment:hookUrl"`
 	Status   int    `json:"status" gorm:"comment:hook状态"`
 	Token    string `json:"token" gorm:"comment:token"`
+	AppId    uint	`json:"appId"`
 }
 
 func (MmtWebHook) TableNname() string {
