@@ -2,7 +2,7 @@ package user
 
 import (
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"mmt/common"
+	"mmt/utils"
 	"mmt/mmt/internal/logic/user"
 	"mmt/mmt/internal/svc"
 	"mmt/mmt/internal/types"
